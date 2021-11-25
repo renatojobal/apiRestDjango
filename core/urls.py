@@ -5,21 +5,23 @@ from django.conf import settings
 from django.urls import path, include
 
 # Rest framewkor imports
-# ...
+from rest_framework import routers
 
 # Local project imports
-from core.router import router
 from core import views
 
-app_name = 'core'
+
+router = routers.DefaultRouter()
+router.register(r'students', views.StudentViewSet)
+
+
 
 urlpatterns = [
-
+    # path('', include(router.urls)),  # Default views, but not used because the urls for some other methos are in singular, like 'stundet'
     path('students', views.list_students, name='list_students'),
-    path('student/<int:student_id>', views.get_student),
-    path('students/filter', views.get_student_by_filter),
+    path('student/<int:id>', views.manage_student, name='manage_student'),
+    path('students/filter', views.get_student_by_filter_query_paramans),
     path('student', views.create_student),
-    path('student/<int:student_id>', views.update_student),
-    path('student/<int:student_id>', views.delete_student),
+
 
 ]
